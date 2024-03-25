@@ -7,7 +7,11 @@ public class moveBall : MonoBehaviour
     public float speed = 0f;
 
     public float jumpForce = 9;
+    public AudioSource audioSource;
+    public AudioSource fallSource;
+    public AudioSource colisionSource;
     private bool isBallOnGround = true;
+
 
     private void Start()
     {
@@ -34,6 +38,7 @@ public class moveBall : MonoBehaviour
         {
             rigidbody.AddForce(Vector3.up * jumpForce,ForceMode.Impulse);
             isBallOnGround = false;
+            audioSource.Play();
             Debug.Log("Ball was jumped");
         }
     }
@@ -45,6 +50,11 @@ public class moveBall : MonoBehaviour
             Debug.Log("changed to true");
             isBallOnGround = true;
         }
+        if(collision.gameObject.tag == "Lava")
+        {
+            fallSource.Play();
+        }
+        colisionSource.Play();
     }
     private void OnCollisionExit(Collision collision) //це коли відскочив він змінює прапорець на false щоб знову не пригнути (Bouncy)
     {
