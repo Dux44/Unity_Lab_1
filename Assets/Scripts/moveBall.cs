@@ -12,16 +12,23 @@ public class moveBall : MonoBehaviour
     public AudioSource colisionSource;
     private bool isBallOnGround = true;
 
+    private Vector3 respawnPoint;
+
 
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
         rigidbody.freezeRotation = true;
+        respawnPoint = transform.position;
     }
     // Update is called once per frame
     void Update()
     {
         PlayerMove();
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            transform.position = respawnPoint;
+        }
     }
     private void PlayerMove()
     {
@@ -53,6 +60,7 @@ public class moveBall : MonoBehaviour
         if(collision.gameObject.tag == "Lava")
         {
             fallSource.Play();
+            transform.position = respawnPoint;
         }
         colisionSource.Play();
     }
